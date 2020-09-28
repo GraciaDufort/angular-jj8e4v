@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 import { CartService } from '../cart.service';
 
@@ -9,13 +10,28 @@ import { CartService } from '../cart.service';
 })
 export class CartComponent implements OnInit {
   items = [];
+  checkoutForm;
 
   constructor(
-    private cartService : CartService
-  ) { }
+    private cartService : CartService,
+    private formBuilder: FormBuilder
+  ) { 
+    this.checkoutForm = this.formBuilder.group({
+      name: '',
+      address: ''
+    });
+  }
 
   ngOnInit() {
     this.items = this.cartService.getItems();
+  }
+
+  onSubmit(customerData){
+    this.items = this.cartService.clearCart();
+    this.checkoutForm.reset();
+
+    //NOTE: In a real-world usage of the app, the data would be sent to an external server
+    console.warn('Your order has been submitted', customerData);
   }
 
 }
