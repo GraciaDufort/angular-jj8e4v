@@ -21,4 +21,4 @@ jobs:
     - name: Install
       run: npm install
     - name: Start application
-      run: npm start 
+      run: ng serve --open
